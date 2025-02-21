@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using ResFin.Domain.Residences;
-
+﻿
 namespace ResFin.Domain.Users;
 
 public class User : BaseEntity
@@ -49,6 +47,8 @@ public class User : BaseEntity
         )
         {
         var user = new User(Guid.NewGuid(), name, family, email, phone, cellPhone, address, userType);
+
+        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 
         return user;
         }

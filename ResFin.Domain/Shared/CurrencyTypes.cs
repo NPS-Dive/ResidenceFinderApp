@@ -1,4 +1,4 @@
-﻿namespace ResFin.Domain.Residences;
+﻿namespace ResFin.Domain.Shared;
 
 public enum CurrencyTypes
     {

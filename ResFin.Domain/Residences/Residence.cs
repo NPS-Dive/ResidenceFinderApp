@@ -40,7 +40,7 @@ public sealed class Residence : BaseEntity
    public Money PricePerNight { get; set; }
     public Money? PriceDiscount { get; private set; }
     public Money CleaningFee { get; private set; }
-    public DateTime? LastBookedUTC { get; private set; }
+    public DateTime? LastBookedUTC { get; internal set; }
     public ResidenceType ResidenceType { get; private set; } = ResidenceType.Apartment;
     public Capacity Capacity { get; private set; } = Capacity.Four;
     public List<Amenity> Amenities { get; private set; } = new();
@@ -58,8 +58,10 @@ public sealed class Residence : BaseEntity
         Capacity capacity,
         List<Amenity> amenities )
     {
-        var user = new Residence(Guid.NewGuid(), name, description, address, pricePerNight, priceDiscount, cleaningFee, lastBookedUtc, residenceType, capacity, amenities);
+        var residence = new Residence(Guid.NewGuid(), name, description, address, pricePerNight, priceDiscount, cleaningFee, lastBookedUtc, residenceType, capacity, amenities);
      
-        return user;
+       residence.RaiseDomainEvent(new ResidenceCreatedDomainEvent(residence.Id));
+
+        return residence;
     }
     }
