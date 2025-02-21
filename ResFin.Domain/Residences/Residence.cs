@@ -6,7 +6,7 @@ public sealed class Residence : BaseEntity
 
     #region Cunstructor
     
-    public Residence(
+    private Residence(
         Guid id,
         Name name,
         Description description,
@@ -44,4 +44,22 @@ public sealed class Residence : BaseEntity
     public ResidenceType ResidenceType { get; private set; } = ResidenceType.Apartment;
     public Capacity Capacity { get; private set; } = Capacity.Four;
     public List<Amenity> Amenities { get; private set; } = new();
+
+   
+    public static Residence Create(
+        Name name,
+        Description description,
+        Address address,
+        Money pricePerNight,
+        Money? priceDiscount,
+        Money cleaningFee,
+        DateTime? lastBookedUtc,
+        ResidenceType residenceType,
+        Capacity capacity,
+        List<Amenity> amenities )
+    {
+        var user = new Residence(Guid.NewGuid(), name, description, address, pricePerNight, priceDiscount, cleaningFee, lastBookedUtc, residenceType, capacity, amenities);
+     
+        return user;
+    }
     }
