@@ -5,3 +5,7 @@ global using ResFin.Domain.Abstractions;
 global using ResFin.Application.Abstractions.Email;
 global using ResFin.Domain.Residences.Events.Reservations.Events;
 global using ResFin.Domain.Users;
+global using ResFin.Application.Abstractions.Messeging;
+global using Dapper;
+global using ResFin.Application.Abstractions.Data;
+global using System.Globalization;
