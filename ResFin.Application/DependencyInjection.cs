@@ -1,4 +1,6 @@
 ﻿
+using ResFin.Application.Abstractions.Behaviors;
+
 namespace ResFin.Application;
 
 public static class DependencyInjection
@@ -8,6 +10,7 @@ public static class DependencyInjection
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
         services.AddTransient<PricingService>();
