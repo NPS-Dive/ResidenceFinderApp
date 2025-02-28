@@ -1,7 +1,8 @@
 ﻿
 namespace ResFin.Application.Abstractions.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class LoggingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
 where TRequest : IBaseCommand
     {
     private readonly ILogger<TRequest> _logger;
@@ -14,7 +15,8 @@ where TRequest : IBaseCommand
     public async Task<TResponse> Handle (
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken )
+        CancellationToken cancellationToken
+        )
         {
         var name = request.GetType().Name;
         try
