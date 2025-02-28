@@ -32,7 +32,7 @@ public sealed class Reservation : BaseEntity
         TotalPrice = totalPrice;
         Status = status;
         CreatedUTC = createdUtc;
-       }
+        }
 
     #endregion
 
@@ -54,18 +54,18 @@ public sealed class Reservation : BaseEntity
 
 
 
-    public static Reservation Reserve(
+    public static Reservation Reserve (
         Residence residence,
         Guid userId,
         Duration duration,
         DateTime utcNow,
        PricingService pricingService
         )
-    {
+        {
         var pricingDetails = pricingService.BillCalculator(residence, duration);
-     
+
         var newReservation = new Reservation(
-            Guid.NewGuid(), 
+            Guid.NewGuid(),
             residence.Id,
             userId,
             duration,
@@ -83,83 +83,83 @@ public sealed class Reservation : BaseEntity
         residence.LastBookedUTC = utcNow;
 
         return newReservation;
-    }
-
-    public Result Confirm(DateTime utcNow)
-    {
-        if (Status is not ReservationStatus.Reserved)
-        {
-            return Result.Failure(ReservationErrors.NotReserved);
         }
+
+    public Result Confirm ( DateTime utcNow )
+        {
+        if (Status is not ReservationStatus.Reserved)
+            {
+            return Result.Failure(ReservationErrors.NotReserved);
+            }
 
         Status = ReservationStatus.Confirmed;
         ConfirmedUTC = utcNow;
         RaiseDomainEvent(new ReservationConfirmedDomainEvent(Id));
 
         return Result.Success();
-    }
+        }
 
 
     public Result Reject ( DateTime utcNow )
-    {
-        if (Status is not ReservationStatus.Reserved)
         {
+        if (Status is not ReservationStatus.Reserved)
+            {
             return Result.Failure(ReservationErrors.NotReserved);
-        }
+            }
 
         Status = ReservationStatus.Rejected;
         RejectedUTC = utcNow;
         RaiseDomainEvent(new ReservationRejectedDomainEvent(Id));
 
         return Result.Success();
-    }
+        }
 
 
     public Result Complete ( DateTime utcNow )
-    {
-        if (Status is not ReservationStatus.Confirmed)
         {
+        if (Status is not ReservationStatus.Confirmed)
+            {
             return Result.Failure(ReservationErrors.NotConfirmed);
-        }
+            }
 
         Status = ReservationStatus.Completed;
         CompletedUTC = utcNow;
         RaiseDomainEvent(new ReservationCompletedDomainEvent(Id));
 
         return Result.Success();
-    }
+        }
 
     public Result Finish ( DateTime utcNow )
-    {
-        if (Status is not ReservationStatus.Completed)
         {
+        if (Status is not ReservationStatus.Completed)
+            {
             return Result.Failure(ReservationErrors.NotCompeleted);
-        }
+            }
 
         Status = ReservationStatus.Finished;
         FinishedUTC = utcNow;
         RaiseDomainEvent(new ReservationFinishedDomainEvent(Id));
 
         return Result.Success();
-    }
+        }
 
     public Result Cancel ( DateTime utcNow )
-    {
-        if (Status is not ReservationStatus.Confirmed)
         {
+        if (Status is not ReservationStatus.Confirmed)
+            {
             return Result.Failure(ReservationErrors.NotConfirmed);
-        }
+            }
 
         var currentDate = DateOnly.FromDateTime(utcNow);
         if (currentDate > Duration.BeginDate)
-        {
+            {
             return Result.Failure(ReservationErrors.AlreadyBegun);
-        }
+            }
 
         Status = ReservationStatus.Cancelled;
         CancelledUTC = utcNow;
         RaiseDomainEvent(new ReservationCanceledDomainEvent(Id));
 
         return Result.Success();
-    }
+        }
     }

@@ -1,9 +1,4 @@
-﻿using ResFin.Application.Abstractions.Clock;
-using ResFin.Application.Abstractions.Messeging;
-using ResFin.Domain.Residences;
-using ResFin.Domain.Users;
-
-namespace ResFin.Application.Reservations.BookReservation;
+﻿namespace ResFin.Application.Reservations.BookReservation;
 
 internal sealed class BookReservationCommandHandler : ICommandHandler<BookReservationCommand, Guid>
     {
@@ -50,22 +45,29 @@ internal sealed class BookReservationCommandHandler : ICommandHandler<BookReserv
 
         var duration = Duration.Create(request.BeginDate, request.EndDate);
 
-        if (await _residenceRepository.IsOverlappingAsync(residence, duration, cancellationToken))
+        if (await _reservationRepository.IsOverlappingAsync(residence, duration, cancellationToken))
             {
             return Result.Failure<Guid>(ReservationErrors.Overlap);
             }
 
-        var reservation = Reservation.Reserve(
-            residence,
-            user.Id,
-            duration,
-           _dateTimeProvider.UtcNow,
-            _pricingService);
+        try
+            {
+            var reservation = Reservation.Reserve(
+                residence,
+                user.Id,
+                duration,
+                _dateTimeProvider.UtcNow,
+                _pricingService);
 
-        _reservationRepository.AddAsync(reservation);
+            await _reservationRepository.AddAsync(reservation);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return reservation.Id;
+            return reservation.Id;
+            }
+        catch (ConcurrencyException)
+            {
+            return Result.Failure<Guid>(ReservationErrors.Overlap);
+            }
         }
     }

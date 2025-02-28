@@ -7,5 +7,6 @@ public class ValidationException : Exception
         Errors = errors;
         }
 
-    public IEnumerable<ValidationError> Errors { get; }
+      
+        public IEnumerable<ValidationError> Errors { get; }
     }
