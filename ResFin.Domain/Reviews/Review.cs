@@ -24,6 +24,11 @@ public sealed class Review : BaseEntity
         CreatedUtc = createdUtc;
         }
 
+        private Review()
+        {
+            
+        }
+
     public Guid ResidenceId { get; private set; }
     public Guid ReservationId { get; private set; }
     public Guid UserId { get; private set; }

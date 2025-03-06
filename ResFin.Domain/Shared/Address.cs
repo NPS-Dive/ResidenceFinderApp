@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace ResFin.Domain.Residences;
+﻿namespace ResFin.Domain.Shared;
 
 public record Address (
     string Country,

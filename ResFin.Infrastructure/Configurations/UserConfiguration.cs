@@ -8,6 +8,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(user => user.Id);
 
+        builder.OwnsOne(user => user.Address);
+        builder.OwnsOne(user => user.CellPhone);
+        builder.OwnsOne(user => user.Phone);
+
         builder.Property(user => user.FirstName)
             .HasMaxLength(50)
             .HasConversion(firstname => firstname.Value, value => new FirstName(value));
@@ -21,5 +25,6 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
 
         builder.HasIndex(user => user.Email).IsUnique();
+        
         }
     }

@@ -1,0 +1,24 @@
+services:
+  resfin.webapi:
+    image: ${DOCKER_REGISTRY-}resfinwebapi
+    container_name: ResFin.WebApi
+    build:
+      context: .
+      dockerfile: ResFin.WebApi/Dockerfile
+    depends_on:
+      - resfin-db
+   
+  resfin-db:
+    image: postgres:latest
+    container_name: ResFin.Db
+    environment:
+     - POSTGRES_DB=resfin
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWOED=postgres
+    volumes:
+     - ./.containers/database:/var/lib/postgresql/data
+    ports:
+     - 5432:5432
+
+
+

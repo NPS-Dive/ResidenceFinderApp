@@ -34,6 +34,11 @@ public sealed class Reservation : BaseEntity
         CreatedUTC = createdUtc;
         }
 
+        private Reservation()
+        {
+            
+        }
+
     #endregion
 
     public Guid ResidenceId { get; private set; }
@@ -54,7 +59,7 @@ public sealed class Reservation : BaseEntity
 
 
 
-    public static Reservation Reserve (
+    public static Reservation Create (
         Residence residence,
         Guid userId,
         Duration duration,

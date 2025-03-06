@@ -1,0 +1,13 @@
+﻿global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using ResFin.Application;
+global using ResFin.Application.Residences.SearchResidences;
+global using ResFin.Infrastructure;
+global using ResFin.WebApi.Extensions;
+global using Bogus;
+global using Dapper;
+global using ResFin.Application.Abstractions.Data;
+global using ResFin.Domain.Residences;
+global using ResFin.Application.Exceptions;
+global using Microsoft.EntityFrameworkCore;
+global using ResFin.WebApi.Middleware;

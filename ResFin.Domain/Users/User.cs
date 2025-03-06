@@ -1,5 +1,4 @@
-﻿
-namespace ResFin.Domain.Users;
+﻿namespace ResFin.Domain.Users;
 
 public class User : BaseEntity
     {
@@ -23,6 +22,11 @@ public class User : BaseEntity
         CellPhone = cellPhone;
         Address = address;
         UserType = userType;
+        }
+
+        private User()
+        {
+            
         }
 
     #endregion

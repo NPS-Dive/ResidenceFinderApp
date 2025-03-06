@@ -52,7 +52,7 @@ internal sealed class BookReservationCommandHandler : ICommandHandler<BookReserv
 
         try
             {
-            var reservation = Reservation.Reserve(
+            var reservation = Reservation.Create(
                 residence,
                 user.Id,
                 duration,

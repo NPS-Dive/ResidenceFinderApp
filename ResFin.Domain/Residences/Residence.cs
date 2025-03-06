@@ -1,5 +1,4 @@
-﻿
-namespace ResFin.Domain.Residences;
+﻿namespace ResFin.Domain.Residences;
 
 public sealed class Residence : BaseEntity
     {
@@ -32,6 +31,10 @@ public sealed class Residence : BaseEntity
         Amenities = amenities;
     }
 
+    private Residence()
+    {
+        
+    }
     #endregion
 
     public Name Name { get; private set; }
