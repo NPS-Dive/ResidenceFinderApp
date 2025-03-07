@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ResFin.Application.Users.LoginUser;
 using ResFin.Application.Users.RegisterUser;
 
 namespace ResFin.WebApi.Controllers.Users
@@ -42,6 +43,27 @@ namespace ResFin.WebApi.Controllers.Users
             }
 
             return Ok(result.Value);
+            }
+
+            [AllowAnonymous]
+            [HttpPost]
+            public async Task<IActionResult> LogIn(
+                LoginUserRequest request,
+                CancellationToken cancellationToken)
+            {
+                var command = new LoginUserCommand(
+                    request.Email,
+                    request.Password
+                    );
+
+                var result = await _sender.Send(command, cancellationToken);
+
+                if (result.IsFailure)
+                {
+                    return Unauthorized(result.Error);
+                }
+
+                return Ok(result.Value);
             }
         }
     }

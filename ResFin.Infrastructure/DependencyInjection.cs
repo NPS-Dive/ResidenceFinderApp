@@ -14,21 +14,14 @@ public static class DependencyInjection
 
         AddPersistence(services, configuration);
 
-        #region Authentication Configuration
+        AddAuthentication(services, configuration);
 
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer();
-
-        services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
-        services.ConfigureOptions<JwtBearerOptionsSetup>();
-
-        #endregion  Authentication Configuration
+     
 
         return services;
         }
 
-        private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
+        private static void AddPersistence ( IServiceCollection services, IConfiguration configuration )
         {
             var connectionString = configuration.GetConnectionString("Database") ??
                                    throw new ArgumentNullException(nameof(configuration));
@@ -49,4 +42,31 @@ public static class DependencyInjection
 
             SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
         }
+
+    private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer();
+
+            services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
+            services.ConfigureOptions<JwtBearerOptionsSetup>();
+            services.Configure<KeyCloakOptions>(configuration.GetSection("keycloak"));
+            services.AddTransient<AdminAuthorizationDelegatingHandler>();
+            services.AddHttpClient<IAuthenticationService, AuthenticationService>(( ServiceProvider, HttpClient ) =>
+                {
+                    var keyCloakOptions = ServiceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+                    HttpClient.BaseAddress = new Uri(keyCloakOptions.AdminUrl);
+                })
+                .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+
+            services.AddHttpClient<IJwtService, JwtService>((ServiceProvider, HttpClient) =>
+            {
+                var keyCloakOptions = ServiceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+                HttpClient.BaseAddress = new Uri(keyCloakOptions.TokenUrl);
+            });
+
+        }
+
+      
     }
