@@ -14,3 +14,5 @@ global using ResFin.Domain.Residences;
 global using ResFin.Domain.Residences.Events.Reservations;
 global using ResFin.Domain.Residences.Events.Reservations.Events;
 global using ResFin.Domain.Users;
+global using ResFin.Application.Abstractions.Authentication;
+global using ResFin.Domain.Shared;

@@ -38,6 +38,7 @@ public class User : BaseEntity
     public CellPhone CellPhone { get; private set; }
     public Address? Address { get; private set; }
     public UserType UserType { get; private set; }
+    public string IdentityId { get; private set; } = string.Empty;
 
 
     public static User Create (
@@ -57,4 +58,10 @@ public class User : BaseEntity
         return user;
         }
 
+    public void SetIdentityId ( string identityId )
+    {
+        IdentityId = identityId;
+    }
+
+  
     }

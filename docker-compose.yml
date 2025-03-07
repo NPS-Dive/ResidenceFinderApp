@@ -19,6 +19,20 @@ services:
      - ./.containers/database:/var/lib/postgresql/data
     ports:
      - 5432:5432
+- 
+resfin-idp:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: ResFin.Identity
+    command: start-dev --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/opt/keycloak/data/import/realm.json
+    volumes:
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files/resfin-realm-export.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - 18080:8080
 
 
 
