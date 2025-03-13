@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ResFin.Application.Users.GetLoggedInUser;
 using ResFin.Application.Users.LoginUser;
 using ResFin.Application.Users.RegisterUser;
+using ResFin.Infrastructure.Authorization;
 
 namespace ResFin.WebApi.Controllers.Users
     {
@@ -22,6 +23,7 @@ namespace ResFin.WebApi.Controllers.Users
 
         [HttpGet]
         [Authorize(Roles = Roles.Registered)]
+        [HasPermission(Permissions.UsersRead)]
         public async Task<IActionResult> GetLoggedInUser ( CancellationToken cancellationToken )
             {
             var query = new GetLoggedInUserQuery();
