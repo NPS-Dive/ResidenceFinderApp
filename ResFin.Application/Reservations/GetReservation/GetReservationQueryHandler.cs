@@ -5,10 +5,15 @@ namespace ResFin.Application.Reservations.GetReservation;
 internal sealed class GetReservationQueryHandler : IQueryHandler<GetReservationQuery, ReservationResponse>
     {
     private readonly ISqlConnectionFactory _sqlConnection;
+    private readonly IUserContext _userContext;
 
-    public GetReservationQueryHandler ( ISqlConnectionFactory sqlConnection )
+    public GetReservationQueryHandler (
+        ISqlConnectionFactory sqlConnection,
+        IUserContext userContext
+        )
         {
         _sqlConnection = sqlConnection;
+        _userContext = userContext;
         }
 
     public async Task<Result<ReservationResponse>> Handle (
@@ -21,6 +26,7 @@ internal sealed class GetReservationQueryHandler : IQueryHandler<GetReservationQ
                          SELECT
                                 id AS Id,
                                 residence_Id AS ResidenceId,
+                                user_id AS UserId,
                                 status AS Status,
                                 price_for_period_amount AS PriceAmount ,
                                 price_for_currency AS PriceCurrency,
@@ -46,6 +52,10 @@ internal sealed class GetReservationQueryHandler : IQueryHandler<GetReservationQ
                 request.ReservationId
                 });
 
-        return reservation;
+        if (reservation is null || reservation.UserId != _userContext.UserId)
+        {
+            return Result.Failure<ReservationResponse>(ReservationErrors.NotFound);
+        }
+            return reservation;
         }
     }
