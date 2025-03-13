@@ -7,20 +7,20 @@ services:
       dockerfile: ResFin.WebApi/Dockerfile
     depends_on:
       - resfin-db
-   
+  
   resfin-db:
     image: postgres:latest
     container_name: ResFin.Db
     environment:
-     - POSTGRES_DB=resfin
-     - POSTGRES_USER=postgres
-     - POSTGRES_PASSWOED=postgres
+      - POSTGRES_DB=resfin
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
-     - ./.containers/database:/var/lib/postgresql/data
+      - ./.containers/database:/var/lib/postgresql/data
     ports:
-     - 5432:5432
-- 
-resfin-idp:
+      - 5432:5432
+  
+  resfin-idp:
     image: quay.io/keycloak/keycloak:latest
     container_name: ResFin.Identity
     command: start-dev --import-realm
@@ -33,6 +33,3 @@ resfin-idp:
       - ./.files/resfin-realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - 18080:8080
-
-
-

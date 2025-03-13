@@ -4,7 +4,7 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
     {
     private readonly IPublisher _publisher;
 
-    public ApplicationDbContext ( DbContextOptions options, IPublisher publisher )
+    public ApplicationDbContext ( DbContextOptions options, IPublisher? publisher = null )
     : base(options)
         {
         _publisher = publisher;
@@ -18,7 +18,10 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
 
     public override async Task<int> SaveChangesAsync ( CancellationToken cancellationToken = new CancellationToken() )
         {
-        try
+            
+            if (_publisher != null)
+            {
+                      try
             {
             var result = await base.SaveChangesAsync(cancellationToken);
             await PublishDomainEventsAsync();
@@ -28,6 +31,9 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
             {
             throw new ConcurrencyException("Concurrency Exception Occured!", dbConException);
             }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
     private async Task PublishDomainEventsAsync ()

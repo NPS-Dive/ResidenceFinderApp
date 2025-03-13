@@ -1,7 +1,9 @@
-﻿namespace ResFin.Infrastructure.Authentication;
+﻿using IAuthenticationService = ResFin.Application.Abstractions.Authentication.IAuthenticationService;
+
+namespace ResFin.Infrastructure.Authentication;
 
 public class AuthenticationService : IAuthenticationService
-    {
+{
     private const string PasswordCredentialType = "password";
     private readonly HttpClient _httpClient;
 

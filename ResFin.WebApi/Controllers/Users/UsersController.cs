@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ResFin.Application.Users.GetLoggedInUser;
 using ResFin.Application.Users.LoginUser;
 using ResFin.Application.Users.RegisterUser;
 
@@ -17,6 +18,17 @@ namespace ResFin.WebApi.Controllers.Users
             {
             _sender = sender;
             }
+
+
+        [HttpGet]
+        [Authorize(Roles = Roles.Registered)]
+        public async Task<IActionResult> GetLoggedInUser ( CancellationToken cancellationToken )
+            {
+            var query = new GetLoggedInUserQuery();
+            var result = await _sender.Send(query, cancellationToken);
+            return Ok(result.Value);
+            }
+
 
         [AllowAnonymous]
         [HttpPost]
@@ -38,32 +50,32 @@ namespace ResFin.WebApi.Controllers.Users
             var result = await _sender.Send(command, cancellationToken);
 
             if (result.IsFailure)
-            {
+                {
                 return BadRequest(result.Error);
-            }
+                }
 
             return Ok(result.Value);
             }
 
-            [AllowAnonymous]
-            [HttpPost]
-            public async Task<IActionResult> LogIn(
-                LoginUserRequest request,
-                CancellationToken cancellationToken)
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> LogIn (
+            LoginUserRequest request,
+            CancellationToken cancellationToken )
             {
-                var command = new LoginUserCommand(
-                    request.Email,
-                    request.Password
-                    );
+            var command = new LoginUserCommand(
+                request.Email,
+                request.Password
+                );
 
-                var result = await _sender.Send(command, cancellationToken);
+            var result = await _sender.Send(command, cancellationToken);
 
-                if (result.IsFailure)
+            if (result.IsFailure)
                 {
-                    return Unauthorized(result.Error);
+                return Unauthorized(result.Error);
                 }
 
-                return Ok(result.Value);
+            return Ok(result.Value);
             }
         }
     }

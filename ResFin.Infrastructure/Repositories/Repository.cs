@@ -17,13 +17,13 @@ where T : BaseEntity
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             DbContext.Add(entity);
         }
 
-        public async Task AddAsync(T entity)
+        public async virtual Task AddAsync(T entity)
         {
-            DbContext.AddAsync(entity);
+           await DbContext.AddAsync(entity);
         }
     }

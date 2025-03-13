@@ -2,7 +2,9 @@
 
 public class User : BaseEntity
     {
-    #region MyRegion
+
+    private readonly List<Role> _roles = new();
+    #region constructor
 
     private User (
         Guid id,
@@ -24,9 +26,9 @@ public class User : BaseEntity
         UserType = userType;
         }
 
-        private User()
+    private User ()
         {
-            
+
         }
 
     #endregion
@@ -40,6 +42,7 @@ public class User : BaseEntity
     public UserType UserType { get; private set; }
     public string IdentityId { get; private set; } = string.Empty;
 
+    public IReadOnlyCollection<Role> Roles => _roles.ToList();
 
     public static User Create (
         FirstName name,
@@ -54,14 +57,15 @@ public class User : BaseEntity
         var user = new User(Guid.NewGuid(), name, family, email, phone, cellPhone, address, userType);
 
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+        user._roles.Add(Role.Registered);
 
         return user;
         }
 
     public void SetIdentityId ( string identityId )
-    {
+        {
         IdentityId = identityId;
-    }
+        }
 
-  
+
     }
