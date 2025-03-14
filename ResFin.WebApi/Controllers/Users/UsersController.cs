@@ -1,7 +1,12 @@
-﻿namespace ResFin.WebApi.Controllers.Users
+﻿using Asp.Versioning;
+
+namespace ResFin.WebApi.Controllers.Users
     {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [ApiVersion(ApiVersions.V1, Deprecated = true)]
+    [ApiVersion(ApiVersions.V2)]
+    [ApiVersion(ApiVersions.V3)]
+    [Route("api/[controller]/v{version:apiVersion}/[action]")]
 
     public class UsersController : ControllerBase
         {
@@ -16,11 +21,22 @@
         [HttpGet]
         [Authorize(Roles = Roles.Registered)]
         [HasPermission(Permissions.UsersRead)]
-        public async Task<IActionResult> GetLoggedInUser ( CancellationToken cancellationToken )
+        [MapToApiVersion(ApiVersions.V2)]
+        public async Task<IActionResult> GetLoggedInUserV2 ( CancellationToken cancellationToken )
             {
             var query = new GetLoggedInUserQuery();
             var result = await _sender.Send(query, cancellationToken);
             return Ok(result.Value);
+            }
+
+        [HttpGet]
+        [HasPermission(Permissions.UsersRead)]
+        [MapToApiVersion(ApiVersions.V3)]
+        public async Task<IActionResult> GetLoggedInUserV3 ( CancellationToken cancellationToken )
+            {
+                var query = new GetLoggedInUserQuery();
+                var result = await _sender.Send(query, cancellationToken);
+                return Ok(result.Value);
             }
 
 

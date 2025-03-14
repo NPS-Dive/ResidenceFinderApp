@@ -1,8 +1,11 @@
-﻿namespace ResFin.WebApi.Controllers.Residences
+﻿using Asp.Versioning;
+
+namespace ResFin.WebApi.Controllers.Residences
     {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion(ApiVersions.V2)]
+    [Route("api/[controller]/v{version:apiVersion}/[action]")]
 
     public class ResidenceController : ControllerBase
         {

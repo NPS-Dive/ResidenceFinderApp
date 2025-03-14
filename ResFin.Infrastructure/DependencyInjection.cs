@@ -1,5 +1,7 @@
-﻿using ResFin.Application.Abstractions.Caching;
+﻿using Asp.Versioning;
+using ResFin.Application.Abstractions.Caching;
 using ResFin.Infrastructure.Caching;
+
 using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = ResFin.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = ResFin.Application.Abstractions.Authentication.IAuthenticationService;
@@ -23,7 +25,9 @@ public static class DependencyInjection
 
         services.AddScoped<IUserContext, UserContext>();
 
-        AddCaching(services,configuration);
+        AddCaching(services, configuration);
+        AddHealthCheck(services, configuration);
+        AddApiVersioning(services);
 
         return services;
         }
@@ -84,11 +88,37 @@ public static class DependencyInjection
         services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
         }
 
-        private static void AddCaching(IServiceCollection services, IConfiguration configuration)
+    private static void AddCaching ( IServiceCollection services, IConfiguration configuration )
         {
-            var connectionString = configuration.GetConnectionString("Cache") ??
-                                   throw new ArgumentNullException(nameof(configuration));
-            services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
-            services.AddSingleton<ICacheService, CacheService>();
+        var connectionString = configuration.GetConnectionString("Cache") ??
+                               throw new ArgumentNullException(nameof(configuration));
+        services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
+        services.AddSingleton<ICacheService, CacheService>();
         }
+
+    private static void AddHealthCheck ( IServiceCollection services, IConfiguration configuration )
+        {
+        services.AddHealthChecks()
+            .AddNpgSql(configuration.GetConnectionString("Database")!)
+            .AddRedis(configuration.GetConnectionString("Cache")!)
+            .AddUrlGroup(new Uri(configuration["KeyCloak:BaseUrl"]!), HttpMethod.Get, "keycloak");
+        }
+
+    private static void AddApiVersioning ( IServiceCollection services )
+    {
+        services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new HeaderApiVersionReader(),
+                    new UrlSegmentApiVersionReader());
+            })
+            .AddMvc()
+            .AddApiExplorer(options =>
+                {
+                    options.GroupNameFormat = "'v'V";
+                    options.SubstituteApiVersionInUrl=true;
+                });
+    }
     }

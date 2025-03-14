@@ -1,8 +1,11 @@
-﻿namespace ResFin.WebApi.Controllers.Reservations
+﻿using Asp.Versioning;
+
+namespace ResFin.WebApi.Controllers.Reservations
     {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [ApiVersion(ApiVersions.V2)]
+    [Route("api/[controller]/v{version:apiVersion}/[action]")]
 
     public class ReservationsController : ControllerBase
         {
