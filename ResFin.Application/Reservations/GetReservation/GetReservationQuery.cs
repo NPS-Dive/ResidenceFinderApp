@@ -1,5 +1,9 @@
-﻿namespace ResFin.Application.Reservations.GetReservation;
+﻿using ResFin.Application.Abstractions.Caching;
 
-public sealed record GetReservationQuery (
-    Guid ReservationId
-    ) : IQuery<ReservationResponse>;
+namespace ResFin.Application.Reservations.GetReservation;
+
+public sealed record GetReservationQuery (Guid ReservationId) : ICachedQuery<ReservationResponse>
+{
+    public string CacheKey => $"Reservations-{ReservationId}";
+    public TimeSpan? Expiration => null;
+}

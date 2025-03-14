@@ -42,11 +42,19 @@ services:
       - 18080:8080
 
   resfin-seq:
-      image: datalust/seq:latest
-      container_name: Resfin.Seq
-      environment:
-        - ACCEPT_EULA=Y
-      ports:
-        - 5341:5341
-        - 8081:80
+    image: datalust/seq:latest
+    container_name: Resfin.Seq
+    environment:
+       - ACCEPT_EULA=Y
+    ports:
+       - '5341:5341'
+       - 8081:80
+
+ 
+  resfin-redis:
+    image: redis:latest
+    container_name: Resfin.Redis
+    restart: always
+    ports:
+       - '6379:6379'
 

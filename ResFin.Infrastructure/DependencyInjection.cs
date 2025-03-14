@@ -1,4 +1,6 @@
-﻿using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
+﻿using ResFin.Application.Abstractions.Caching;
+using ResFin.Infrastructure.Caching;
+using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = ResFin.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = ResFin.Application.Abstractions.Authentication.IAuthenticationService;
 
@@ -20,6 +22,8 @@ public static class DependencyInjection
         AddAuthorization(services);
 
         services.AddScoped<IUserContext, UserContext>();
+
+        AddCaching(services,configuration);
 
         return services;
         }
@@ -80,5 +84,11 @@ public static class DependencyInjection
         services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
         }
 
-
+        private static void AddCaching(IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("Cache") ??
+                                   throw new ArgumentNullException(nameof(configuration));
+            services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
+            services.AddSingleton<ICacheService, CacheService>();
+        }
     }
