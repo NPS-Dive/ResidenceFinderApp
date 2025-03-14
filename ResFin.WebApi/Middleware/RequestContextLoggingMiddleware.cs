@@ -1,6 +1,4 @@
-﻿using Serilog.Context;
-
-namespace ResFin.WebApi.Middleware;
+﻿namespace ResFin.WebApi.Middleware;
 
 public class RequestContextLoggingMiddleware
     {

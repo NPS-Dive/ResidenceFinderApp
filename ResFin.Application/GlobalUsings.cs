@@ -1,4 +1,5 @@
-﻿global using Dapper;
+﻿global using System.Data;
+global using Dapper;
 global using FluentValidation;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
@@ -16,3 +17,4 @@ global using ResFin.Domain.Residences.Events.Reservations.Events;
 global using ResFin.Domain.Users;
 global using ResFin.Application.Abstractions.Authentication;
 global using ResFin.Domain.Shared;
+global using Serilog.Context;

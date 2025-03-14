@@ -1,7 +1,4 @@
-﻿using ResFin.Domain.Residences.Events.Reservations;
-using ResFin.Domain.Reviews.Events;
-
-namespace ResFin.Domain.Reviews;
+﻿namespace ResFin.Domain.Reviews;
 
 public sealed class Review : BaseEntity
     {

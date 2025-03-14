@@ -1,10 +1,4 @@
-﻿using ResFin.Application.Abstractions.Authentication;
-using ResFin.Application.Abstractions.Data;
-using ResFin.Application.Abstractions.Messeging;
-using ResFin.Domain.Abstractions;
-using Dapper;
-
-namespace ResFin.Application.Users.GetLoggedInUser;
+﻿namespace ResFin.Application.Users.GetLoggedInUser;
 
 internal sealed class GetLoggedInUserQueryHandler
     : IQueryHandler<GetLoggedInUserQuery, UserResponse>

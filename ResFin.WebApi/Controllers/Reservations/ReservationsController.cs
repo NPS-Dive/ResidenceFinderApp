@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using ResFin.Application.Reservations.BookReservation;
-using ResFin.Application.Reservations.GetReservation;
-
-namespace ResFin.WebApi.Controllers.Reservations
+﻿namespace ResFin.WebApi.Controllers.Reservations
     {
     [Authorize]
     [ApiController]

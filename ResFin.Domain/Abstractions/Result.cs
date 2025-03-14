@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace ResFin.Domain.Abstractions;
+﻿namespace ResFin.Domain.Abstractions;
 
 public class Result
     {

@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ResFin.Application.Users.GetLoggedInUser;
-using ResFin.Application.Users.LoginUser;
-using ResFin.Application.Users.RegisterUser;
-using ResFin.Infrastructure.Authorization;
-
-namespace ResFin.WebApi.Controllers.Users
+﻿namespace ResFin.WebApi.Controllers.Users
     {
     [ApiController]
     [Route("api/[controller]/[action]")]

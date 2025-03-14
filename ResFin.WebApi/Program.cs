@@ -1,4 +1,3 @@
-using ResFin.WebApi.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

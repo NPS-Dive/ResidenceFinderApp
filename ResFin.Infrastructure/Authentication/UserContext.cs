@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ResFin.Infrastructure.Authentication;
+﻿namespace ResFin.Infrastructure.Authentication;
 
 internal sealed class UserContext : IUserContext
     {

@@ -1,6 +1,4 @@
-﻿using ResFin.Domain.Shared;
-
-namespace ResFin.Application.Users.RegisterUser;
+﻿namespace ResFin.Application.Users.RegisterUser;
 
 public sealed record RegisterUserCommand (
     string FirstName,

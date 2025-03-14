@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace ResFin.Domain.Reviews;
+﻿namespace ResFin.Domain.Reviews;
 
 public record Rating
     {

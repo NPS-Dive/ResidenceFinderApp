@@ -1,7 +1,5 @@
 ﻿
 
-using ResFin.Domain.Residences;
-
 namespace ResFin.Application.Reservations.BookReservation;
 
 internal sealed class ReservationReservedDomainEventHandler : INotificationHandler<ReservationReservedDomainEvent>

@@ -1,6 +1,4 @@
-﻿using ValidationException = ResFin.Application.Exceptions.ValidationException;
-
-namespace ResFin.WebApi.Middleware;
+﻿namespace ResFin.WebApi.Middleware;
 
 public class ExceptionHandlingMiddleware
     {

@@ -1,7 +1,4 @@
-﻿using System.Data;
-using Dapper;
-
-namespace ResFin.Infrastructure.Data;
+﻿namespace ResFin.Infrastructure.Data;
 
 internal sealed class DateOnlyTypeHandler : SqlMapper.TypeHandler<DateOnly>
     {

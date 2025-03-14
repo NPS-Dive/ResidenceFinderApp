@@ -1,6 +1,4 @@
 ﻿
-using ResFin.Domain.Residences.Events.Reservations;
-
 namespace ResFin.Domain.Residences;
 
 public interface IResidenceRepository

@@ -1,6 +1,4 @@
 ﻿
-using Serilog.Context;
-
 namespace ResFin.Application.Abstractions.Behaviors;
 
 public class LoggingBehavior<TRequest, TResponse>

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
+﻿using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = ResFin.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = ResFin.Application.Abstractions.Authentication.IAuthenticationService;
 

@@ -1,6 +1,4 @@
 ﻿
-using ResFin.Application.Abstractions.Behaviors;
-
 namespace ResFin.Application;
 
 public static class DependencyInjection

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-
-namespace ResFin.Infrastructure.Authentication;
+﻿namespace ResFin.Infrastructure.Authentication;
 
 public class JwtBearerOptionsSetup   :IConfigureNamedOptions<JwtBearerOptions>
 {

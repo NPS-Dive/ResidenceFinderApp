@@ -1,6 +1,4 @@
-﻿using ResFin.Application.Abstractions.Messeging;
-
-namespace ResFin.Application.Reservations.BookReservation;
+﻿namespace ResFin.Application.Reservations.BookReservation;
 
 public record BookReservationCommand (
     Guid ResidenceId,

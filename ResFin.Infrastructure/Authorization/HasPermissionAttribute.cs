@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace ResFin.Infrastructure.Authorization;
+﻿namespace ResFin.Infrastructure.Authorization;
 
 public sealed class HasPermissionAttribute : AuthorizeAttribute
     {

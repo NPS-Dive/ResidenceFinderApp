@@ -1,7 +1,4 @@
-﻿using ResFin.Domain.Shared;
-using ResFin.Domain.Users;
-
-namespace ResFin.WebApi.Controllers.Users;
+﻿namespace ResFin.WebApi.Controllers.Users;
 
 public sealed record RegisterUserRequest (
     string FirstName,

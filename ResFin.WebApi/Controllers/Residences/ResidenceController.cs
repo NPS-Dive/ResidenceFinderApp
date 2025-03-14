@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace ResFin.WebApi.Controllers.Residences
+﻿namespace ResFin.WebApi.Controllers.Residences
     {
     [Authorize]
     [ApiController]
