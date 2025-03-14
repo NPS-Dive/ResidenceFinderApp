@@ -14,12 +14,19 @@ services:
     environment:
       - POSTGRES_DB=resfin
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=postgress
     volumes:
       - ./.containers/database:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
   
+  resfin-app:
+    build: .
+    depends_on:
+      - resfin-db
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=resfin-db;Port=5432;Database=resfin;Username=postgres;Password=postgress"
+
   resfin-idp:
     image: quay.io/keycloak/keycloak:latest
     container_name: ResFin.Identity
@@ -33,3 +40,13 @@ services:
       - ./.files/resfin-realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - 18080:8080
+
+  resfin-seq:
+      image: datalust/seq:latest
+      container_name: Resfin.Seq
+      environment:
+        - ACCEPT_EULA=Y
+      ports:
+        - 5341:5341
+        - 8081:80
+

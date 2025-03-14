@@ -12,6 +12,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.OwnsOne(user => user.CellPhone);
         builder.OwnsOne(user => user.Phone);
 
+        builder.Ignore(user=>user.Phone);
+
         builder.Property(user => user.FirstName)
             .HasMaxLength(50)
             .HasConversion(firstname => firstname.Value, value => new FirstName(value));

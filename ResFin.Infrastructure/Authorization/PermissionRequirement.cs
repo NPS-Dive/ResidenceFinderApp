@@ -4,9 +4,10 @@ namespace ResFin.Infrastructure.Authorization;
 
 public sealed class PermissionRequirement : IAuthorizationRequirement
     {
-    public PermissionRequirement ( string permission )
+        public string Permission { get; }
+
+        public PermissionRequirement ( string permission )
         {
-        Permission = permission;
+            Permission = permission ?? throw new ArgumentNullException(nameof(permission));
         }
-    public string Permission { get; }
     }
