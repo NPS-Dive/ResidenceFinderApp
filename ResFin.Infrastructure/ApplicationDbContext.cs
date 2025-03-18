@@ -1,15 +1,27 @@
-﻿namespace ResFin.Infrastructure;
+﻿using Newtonsoft.Json;
+using ResFin.Infrastructure.Outbox;
+
+namespace ResFin.Infrastructure;
 
 public class ApplicationDbContext : DbContext, IUnitOfWork
     {
-    private readonly IPublisher _publisher;
+    private static readonly JsonSerializerSettings jsonSerializerSettings = new()
+        {
+        TypeNameHandling = TypeNameHandling.All
+        };
+  
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public ApplicationDbContext ( DbContextOptions options, IPublisher? publisher = null )
+    public ApplicationDbContext (
+        DbContextOptions options,
+        IDateTimeProvider dateTimeProvider )
     : base(options)
         {
-        _publisher = publisher;
+        _dateTimeProvider = dateTimeProvider;
+
         }
 
+  
     protected override void OnModelCreating ( ModelBuilder modelBuilder )
         {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
@@ -18,27 +30,26 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
 
     public override async Task<int> SaveChangesAsync ( CancellationToken cancellationToken = new CancellationToken() )
         {
-            
-            if (_publisher != null)
+        try
             {
-                      try
-            {
+            AddDomainEventsAsOutBoxMessages();
+
             var result = await base.SaveChangesAsync(cancellationToken);
-            await PublishDomainEventsAsync();
+
             return result;
             }
         catch (DbUpdateConcurrencyException dbConException)
             {
             throw new ConcurrencyException("Concurrency Exception Occured!", dbConException);
             }
-            }
 
-            return await base.SaveChangesAsync(cancellationToken);
+
+        return await base.SaveChangesAsync(cancellationToken);
         }
 
-    private async Task PublishDomainEventsAsync ()
+    private async Task AddDomainEventsAsOutBoxMessages ()
         {
-        var domainEvents = ChangeTracker
+        var outBoxMessage = ChangeTracker
             .Entries<BaseEntity>()
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
@@ -47,11 +58,16 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
                 entity.ClearDomainEvents();
                 return domainEvents;
             })
+            .Select(domainEvent => new OutboxMessage(
+                Guid.NewGuid(),
+               _dateTimeProvider.UtcNow,
+                domainEvent.GetType().Name,
+                JsonConvert.SerializeObject(domainEvent, jsonSerializerSettings)
+                ))
             .ToList();
 
-        foreach (var domainEvent in domainEvents)
-            {
-            await _publisher.Publish(domainEvent);
-            }
+        AddRange(outBoxMessage);
+
+       
         }
     }

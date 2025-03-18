@@ -1,7 +1,8 @@
 ﻿using Asp.Versioning;
+using Quartz;
 using ResFin.Application.Abstractions.Caching;
 using ResFin.Infrastructure.Caching;
-
+using ResFin.Infrastructure.Outbox;
 using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = ResFin.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = ResFin.Application.Abstractions.Authentication.IAuthenticationService;
@@ -28,6 +29,7 @@ public static class DependencyInjection
         AddCaching(services, configuration);
         AddHealthCheck(services, configuration);
         AddApiVersioning(services);
+        AddBackgroundJob(services, configuration);
 
         return services;
         }
@@ -105,7 +107,7 @@ public static class DependencyInjection
         }
 
     private static void AddApiVersioning ( IServiceCollection services )
-    {
+        {
         services.AddApiVersioning(options =>
             {
                 options.DefaultApiVersion = new ApiVersion(1);
@@ -118,7 +120,23 @@ public static class DependencyInjection
             .AddApiExplorer(options =>
                 {
                     options.GroupNameFormat = "'v'V";
-                    options.SubstituteApiVersionInUrl=true;
+                    options.SubstituteApiVersionInUrl = true;
                 });
-    }
+        }
+
+    private static void AddBackgroundJob ( IServiceCollection services, IConfiguration configuration )
+        {
+        services.Configure<OutBoxOptions>(configuration.GetSection("OutBox"));
+
+        services.AddQuartz();
+
+        services.AddQuartzHostedService(options =>
+            options.WaitForJobsToComplete = true
+        );
+
+        services.AddQuartzHostedService(Options =>
+            Options.WaitForJobsToComplete = true
+        );
+
+        }
     }

@@ -1,23 +1,30 @@
-﻿namespace ResFin.Infrastructure
-{
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext CreateDbContext ( string[] args )
-        {
-            // Build configuration (e.g., from appsettings.json)
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
+﻿//namespace ResFin.Infrastructure
+//{
+//    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+//    {
+//        private readonly IDateTimeProvider _dateTimeProvider;
 
-            // Get the connection string
-            var connectionString = "Host=localhost;Port=5432;Database=resfin;Username=postgres;Password=postgress";
+//        public ApplicationDbContextFactory(IDateTimeProvider dateTimeProvider)
+//        {
+//            _dateTimeProvider = dateTimeProvider;
+//        }
 
-            // Configure DbContextOptions
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseNpgsql(connectionString); // Use Npgsql for Postgres; adjust for your provider
+//        public ApplicationDbContext CreateDbContext ( string[] args )
+//        {
+//            // Build configuration (e.g., from appsettings.json)
+//            var configuration = new ConfigurationBuilder()
+//                .SetBasePath(Directory.GetCurrentDirectory())
+//                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+//                .Build();
 
-            return new ApplicationDbContext(optionsBuilder.Options);
-        }
-    }
-}
+//            // Get the connection string
+//            var connectionString = "Host=localhost;Port=5432;Database=resfin;Username=postgres;Password=postgress";
+
+//            // Configure DbContextOptions
+//            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+//            optionsBuilder.UseNpgsql(connectionString); // Use Npgsql for Postgres; adjust for your provider
+
+//            return new ApplicationDbContext(optionsBuilder.Options, _dateTimeProvider);
+//        }
+//    }
+//}
