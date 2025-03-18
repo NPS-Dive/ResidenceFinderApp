@@ -49,7 +49,8 @@ public class PricingService
         var finalPrice = new Money((totalPrice.Amount - discount.Amount), currency);
 
         var result = new PricingDetails(rowPriceForDuration, residence.CleaningFee, amenitiesUpCharge, discount, finalPrice);
-        
+       
+
         return result;
         }
     }
