@@ -1,6 +1,9 @@
+using Asp.Versioning;
+using Asp.Versioning.Builder;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using ResFin.WebApi.Controllers.Reservations;
 using ResFin.WebApi.OpenApi;
 using Serilog;
 
@@ -72,12 +75,26 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+ApiVersionSet apiVersionSet = app
+    .NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
+
+var routeGroupBuilder= app.MapGroup("api/v{version:apiVersion}").WithApiVersionSet(apiVersionSet);
+
+routeGroupBuilder.MapReservationEndPoints();
+
 app.MapHealthChecks("health", new HealthCheckOptions()
     {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
 app.Run();
+
+//Custom Methods
+  //=====================================================
+
 
 
 
