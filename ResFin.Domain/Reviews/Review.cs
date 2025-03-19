@@ -1,4 +1,6 @@
-﻿namespace ResFin.Domain.Reviews;
+﻿using ResFin.Domain.Reservations;
+
+namespace ResFin.Domain.Reviews;
 
 public sealed class Review : BaseEntity
     {
@@ -21,9 +23,9 @@ public sealed class Review : BaseEntity
         CreatedUtc = createdUtc;
         }
 
-        private Review()
+    private Review ()
         {
-            
+
         }
 
     public Guid ResidenceId { get; private set; }

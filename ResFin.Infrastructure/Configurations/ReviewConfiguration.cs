@@ -1,4 +1,6 @@
-﻿namespace ResFin.Infrastructure.Configurations;
+﻿using ResFin.Domain.Reservations;
+
+namespace ResFin.Infrastructure.Configurations;
 
 internal sealed class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {

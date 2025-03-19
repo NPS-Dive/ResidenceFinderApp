@@ -20,12 +20,6 @@ services:
     ports:
       - "5432:5432"
   
-  # resfin-app:
-  #   build: .
-  #   depends_on:
-  #     - resfin-db
-  #   environment:
-  #     ConnectionStrings__DefaultConnection: "Host=resfin-db;Port=5432;Database=resfin;Username=postgres;Password=postgress"
 
   resfin-idp:
     image: quay.io/keycloak/keycloak:latest

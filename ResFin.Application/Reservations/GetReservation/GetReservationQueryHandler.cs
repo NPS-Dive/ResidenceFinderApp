@@ -1,5 +1,7 @@
 ﻿
 
+using ResFin.Domain.Reservations;
+
 namespace ResFin.Application.Reservations.GetReservation;
 
 internal sealed class GetReservationQueryHandler : IQueryHandler<GetReservationQuery, ReservationResponse>

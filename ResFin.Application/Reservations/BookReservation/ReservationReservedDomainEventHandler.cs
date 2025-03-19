@@ -1,4 +1,4 @@
-﻿
+﻿using ResFin.Domain.Reservations;
 
 namespace ResFin.Application.Reservations.BookReservation;
 

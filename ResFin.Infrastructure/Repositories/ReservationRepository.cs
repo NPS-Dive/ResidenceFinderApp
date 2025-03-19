@@ -1,4 +1,6 @@
-﻿namespace ResFin.Infrastructure.Repositories;
+﻿using ResFin.Domain.Reservations;
+
+namespace ResFin.Infrastructure.Repositories;
 
 internal sealed class ReservationRepository : Repository<Reservation>, IReservationRepository
     {

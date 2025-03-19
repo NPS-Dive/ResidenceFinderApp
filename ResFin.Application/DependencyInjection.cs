@@ -1,4 +1,6 @@
 ﻿
+using ResFin.Domain.Reservations;
+
 namespace ResFin.Application;
 
 public static class DependencyInjection

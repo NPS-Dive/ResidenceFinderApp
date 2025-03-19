@@ -1,6 +1,9 @@
 ﻿
 
-namespace ResFin.Domain.Residences.Events.Reservations;
+using ResFin.Domain.Reservations;
+
+
+namespace ResFin.Domain.Reservations;
 
 public sealed class Reservation : BaseEntity
     {

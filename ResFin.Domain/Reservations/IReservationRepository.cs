@@ -1,5 +1,5 @@
 ﻿
-namespace ResFin.Domain.Residences.Events.Reservations;
+namespace ResFin.Domain.Reservations;
 
 public interface IReservationRepository
     {

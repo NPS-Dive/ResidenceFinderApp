@@ -1,4 +1,4 @@
-﻿namespace ResFin.Domain.Residences.Events.Reservations;
+﻿namespace ResFin.Domain.Reservations;
 
 public record Duration
     {

@@ -1,4 +1,6 @@
-﻿namespace ResFin.Application.Reservations.BookReservation;
+﻿using ResFin.Domain.Reservations;
+
+namespace ResFin.Application.Reservations.BookReservation;
 
 internal sealed class BookReservationCommandHandler : ICommandHandler<BookReservationCommand, Guid>
     {

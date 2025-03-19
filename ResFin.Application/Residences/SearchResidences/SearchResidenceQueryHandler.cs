@@ -1,4 +1,6 @@
-﻿namespace ResFin.Application.Residences.SearchResidences;
+﻿using ResFin.Domain.Reservations;
+
+namespace ResFin.Application.Residences.SearchResidences;
 
 internal sealed class SearchResidenceQueryHandler : IQueryHandler<SearchResidencesQuery, IReadOnlyList<ResidenceResponse>>
     {

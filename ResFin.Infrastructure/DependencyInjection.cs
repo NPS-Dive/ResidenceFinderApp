@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Quartz;
 using ResFin.Application.Abstractions.Caching;
+using ResFin.Domain.Reservations;
 using ResFin.Infrastructure.Caching;
 using ResFin.Infrastructure.Outbox;
 using AuthenticationOptions = ResFin.Infrastructure.Authentication.AuthenticationOptions;
