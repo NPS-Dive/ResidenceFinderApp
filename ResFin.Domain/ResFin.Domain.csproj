@@ -17,4 +17,8 @@
     <Folder Include="Reviews\Events\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="ReFin.ArchitectureTests"/>
+	</ItemGroup>
+
 </Project>

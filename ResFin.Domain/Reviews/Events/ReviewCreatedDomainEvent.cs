@@ -1,6 +1,6 @@
 ﻿namespace ResFin.Domain.Reviews.Events;
 
-public record ReviewCreatedDomainEvent (
+public sealed record ReviewCreatedDomainEvent (
     Guid ReviewId 
     )
     : IDomainEvent;

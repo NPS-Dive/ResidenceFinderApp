@@ -1,5 +1,5 @@
 ﻿namespace ResFin.Domain.Residences.Events;
 
-public record ResidenceCreatedDomainEvent (
+public sealed record ResidenceCreatedDomainEvent (
     Guid ResidenceId
     ) : IDomainEvent;

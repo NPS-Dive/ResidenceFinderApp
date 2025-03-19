@@ -1,6 +1,6 @@
 ﻿namespace ResFin.Domain.Residences.Events.Reservations.Events;
 
-public record ReservationConfirmedDomainEvent ( 
+public sealed record ReservationConfirmedDomainEvent ( 
     Guid ReservationId
 )
     : IDomainEvent;
